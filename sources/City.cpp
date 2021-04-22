@@ -14,11 +14,10 @@
 	}
 
 	
-	City::City(int _cityId, std::string _name, int _stateId, std::string _facts, double _latitude, double _longtitude) 
+	City::City(int _cityId, std::string _name, std::string _facts, double _latitude, double _longtitude) 
 	{
 	 	cityId = _cityId;
 		name = _name;
-		stateId = _stateId;
 		facts = _facts;
 		latitude = _latitude;
 		longtitude = _longtitude;
@@ -30,22 +29,22 @@
 	{
 		return cityId;
 	}
+
 	std::string City::GetName() const
 	{
 		return name;
  	}
-	int City::GetStateId() const 
-	{
-		return stateId;
-	}
+
 	double City::GetRating() const 
 	{
 		return rating;
 	}
+
 	std::string City::GetFacts() const 
 	{
 		return facts;
 	}
+
 	void City::AddFact(const std::string & _fact)
 	{
 		if (facts.empty()) {

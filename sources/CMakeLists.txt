@@ -6,6 +6,10 @@ add_executable(${TARGET}
     ./User.cpp
     ./City.cpp
     ./Event.cpp
+    ./Object.cpp
+    ./Theme.cpp
+    ./Link.cpp
+    ./State.cpp
 )
 
 target_include_directories(${TARGET} PRIVATE

@@ -3,11 +3,10 @@
 class City {
 	public:
 		City();
-		City(int _cityId, std::string _name, int _stateId, std::string _facts, double _latitude, double _longtitude);
+		City(int _cityId, std::string _name, std::string _facts, double _latitude, double _longtitude);
 		
 		int GetCityId() const;
 		std::string GetName() const;
-		int GetStateId() const;
 		double GetRating() const;
 		std::string GetFacts() const;
 
@@ -16,7 +15,6 @@ class City {
 	private:
 		int cityId;
 		std::string name;
-		int stateId;
 		double rating;
 		std::string facts;
 		double latitude;
