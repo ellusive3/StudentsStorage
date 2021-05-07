@@ -1,5 +1,5 @@
 #include <stdafx.h>
-#include <Object.cpp>
+#include <Object.h>
 #include <Theme.h>
 
 	Object::Object()

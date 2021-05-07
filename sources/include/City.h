@@ -24,7 +24,7 @@ class City {
 		*	@param[in] _name - название города
 		*	@param[in] _facts - интересные факты о городе
 		*	@param[in] _latitute - координаты широты
-		*	@param[in] _longtitude - координаты долготы 
+		*	@param[in] _longtitude - координаты долготы
 		*/
 		City(int _cityId, std::string _name, std::string _facts, double _latitude, double _longtitude);
 
@@ -64,7 +64,7 @@ class City {
 		*
 		*	@param[in] _fact - интересный факт о городе
 		*/
-		void AddFact(const std::string & _fact);
+		void AddFact(const std::string& _fact);
 
 		/**
 		*		Установить городу рейтинг
@@ -75,13 +75,13 @@ class City {
 	private:
 		/// Идентификатор города
 		int cityId;
-		
+
 		/// Название города
 		std::string name;
 
 		/// Рейтинг города
 		double rating;
-		
+
 		/// Интересные факты о городе
 		std::string facts;
 
@@ -89,7 +89,7 @@ class City {
 		double latitude;
 
 		/// Координаты долготы
-		double latitude;	
+		double longtitude;
 	protected:
-		
-}
+
+};

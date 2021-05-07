@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 // Forward declarations
 class Theme;
@@ -6,7 +7,7 @@ class Theme;
 class Object {
 	public:
 		Object();
-		Object(int _objectId, std::string _objectName, std::vector<Theme> & _themes);
+		Object(int _objectId, std::string _objectName, std::vector<Theme>& _themes);
 
 		int GetObjectId() const;
 		std::string GetObjectName() const;
@@ -16,4 +17,4 @@ class Object {
 		std::string objectName;
 		std::vector<Theme> themes;
 	protected:
-}
+};

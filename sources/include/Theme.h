@@ -1,13 +1,12 @@
 #pragma once
-
- // Forward Declarations
-class Link;
+#include <vector>
+#include <Link.h>
 
 class Theme {
 	public:
 		Theme();
-		Theme(int _themeId, _description, std::vector<Link> & _links);
-		
+		Theme(int _themeId, std::string _description);
+
 		int GetThemeId() const;
 		std::string GetThemeDescription() const;
 		std::vector<Link> GetLinks() const;
@@ -16,4 +15,4 @@ class Theme {
 		std::string description;
 		std::vector<Link> links;
 	protected:
-}
+};

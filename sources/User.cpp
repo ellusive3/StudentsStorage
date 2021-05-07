@@ -10,7 +10,7 @@
 		groupId = 0;
 	}
 
-	User::User(std::string _firstName, _lastName, _thirdName, int _groupId)
+	User::User(std::string _firstName, std::string _lastName, std::string _thirdName, int _groupId)
 	{
 		firstName = _firstName;
 		lastName = _lastName;

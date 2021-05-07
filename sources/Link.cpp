@@ -7,11 +7,10 @@
 		value = "default";
 	}
 
-	Link::Link(int _linkId, _value, std::vector<Link> & _links)
+	Link::Link(int _linkId, std::string _value)
 	{
 		linkId = _linkId;
 		value = _value;
-		links = _links;
 	}
 
 	int Link::GetLinkId() const

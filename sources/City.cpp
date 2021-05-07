@@ -6,7 +6,6 @@
 	{
 	 	cityId = 0;
 		name = "default";
-		stateId = 0;
 		facts = "";
 		latitude = 0.0;
 		longtitude = 0.0;

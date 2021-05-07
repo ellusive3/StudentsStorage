@@ -6,12 +6,12 @@
 	{
 		eventId = 0;
 		cityId = 0;
-		eventDate = Date();
-		eventTime = Time();
+		eventDate = 0;
+		eventTime = 0;
 		description = "none";
 	}
 
-	Event::Event(int _eventId, int _cityId, Date _eventDate, Time _eventTime, std::string _description)
+	Event::Event(int _eventId, int _cityId, int _eventDate, int _eventTime, std::string _description)
 	{
 		eventId = _eventId;
 		cityId = _cityId;
@@ -30,17 +30,17 @@
 		return cityId;
 	}
 
-	Date Event::GetDate() const
+	int Event::GetDate() const
 	{
 		return eventDate;
 	}
 
-	Time Event::GetTime() const
+	int Event::GetTime() const
 	{
 		return eventTime;
 	}
 
-	std::string Event::GetDescr() cosnt
+	std::string Event::GetDescr() const
 	{
 		return description;
 	}

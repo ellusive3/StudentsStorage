@@ -3,18 +3,18 @@
 class Event {
 	public:
 		Event();
-		Event(int _eventId, int _cityId, Date _eventDate, Time _eventTime, std::string _description);
+		Event(int _eventId, int _cityId, /*Date*/int _eventDate, /*Time*/int _eventTime, std::string _description);
 
 		int GetEventId() const;
 		int GetCityId() const;
-		Date GetDate() const;
-		Time GetTime() const;
-		std::string GetDescr() cosnt;
+		int GetDate() const;
+		int GetTime() const;
+		std::string GetDescr() const;
 	private:
 		int eventId;
 		int cityId;
-		Date eventDate;
-		Time eventTime;
+		int eventDate;
+		int eventTime;
 		std::string description;
 	protected:
-}
+};

@@ -9,7 +9,7 @@
 		links = std::vector<Link>();
 	}
 
-	Theme::Theme(int _themeId, _description)
+	Theme::Theme(int _themeId, std::string _description)
 	{
 		themeId = _themeId;
 		description = _description;

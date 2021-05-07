@@ -9,7 +9,7 @@
 		cities = std::vector<City>();	
 	}
 	
-	State::State(int _stateId, _stateName, std::vector<City> _cities)
+	State::State(int _stateId, std::string _stateName, std::vector<City> _cities)
 	{
 		stateId = _stateId;
 		stateName = _stateName;

@@ -10,6 +10,8 @@ add_executable(${TARGET}
     ./Theme.cpp
     ./Link.cpp
     ./State.cpp
+#    ./Attribute.cpp
+#    ./Row.cpp
 )
 
 target_include_directories(${TARGET} PRIVATE
@@ -18,7 +20,6 @@ target_include_directories(${TARGET} PRIVATE
 
 IF (WIN32)
 target_link_libraries(${TARGET} PRIVATE
-    stdlib
 )
 
 target_compile_options(${TARGET} PRIVATE

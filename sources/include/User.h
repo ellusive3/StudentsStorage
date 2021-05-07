@@ -3,7 +3,7 @@
 class User {
 	public:
 		User();
-		User(std::string _firstName, _lastName, _thirdName, int _groupId);
+		User(std::string _firstName, std::string _lastName, std::string _thirdName, int _groupId);
 		std::string GetFirstName() const;
 		std::string GetLastName() const;
 		std::string GetThirdName() const;
@@ -17,4 +17,4 @@ class User {
 		int groupId;
 		//TODO User's marks
 	protected:
-}
+};
