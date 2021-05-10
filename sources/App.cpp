@@ -1,8 +1,13 @@
 #include <stdafx.h>
+#include <App.h>
+#include <Gui.h>
 
-int main(int argc, char ** argv)
+AppManager::AppManager() {
+	// TODO создать экземпляр GUI
+	window = nullptr;
+}
+
+void AppManager::Run(int width, int height)
 {
-    std::cout << "App starts..." << std::endl;
-    std::cout << "App ends." << std::endl;
-    return 0;
+	// TODO запустить экземпляр GUI
 }

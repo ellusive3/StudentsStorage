@@ -2,6 +2,7 @@ SET(TARGET StudentsStorageMain)
 
 add_executable(${TARGET}
     ./stdafx.cpp
+    ./main.cpp
     ./App.cpp
     ./User.cpp
     ./City.cpp
@@ -10,9 +11,13 @@ add_executable(${TARGET}
     ./Theme.cpp
     ./Link.cpp
     ./State.cpp
-#    ./Attribute.cpp
-#    ./Row.cpp
+    ./Attribute.cpp
+    ./Row.cpp
+    ./Gui.cpp
 )
+
+MESSAGE("TOOLSET IS " ${MSVC_TOOLSET_VERSION})
+
 
 target_include_directories(${TARGET} PRIVATE
     ./include
@@ -21,10 +26,7 @@ target_include_directories(${TARGET} PRIVATE
 IF (WIN32)
 target_link_libraries(${TARGET} PRIVATE
 )
-
+ELSE()
 target_compile_options(${TARGET} PRIVATE
-    -std=c++11
-    -stdlib=libc++
-    -g3
 )
 ENDIF()

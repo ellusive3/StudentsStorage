@@ -15,3 +15,7 @@
 #define LINK_TABLE "link"
 #define GROUP_TABLE "group"
 #define USER_TABLE "user"
+
+#define RETURN_SUCCESS 0
+#define RETURN_RUNTIME_ERROR 1
+#define RETURN_COMPILE_ERROR 2

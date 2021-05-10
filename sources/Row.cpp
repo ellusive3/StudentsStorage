@@ -18,17 +18,18 @@ void Row::AddAttr(Attribute & _attr)
 	}
 }
 
-std::vector<Attribute> & Row::GetAttrs() const
+std::vector<Attribute> Row::GetAttrs() const
 {
 	return m_attrs;
 }
 
-Attribute & Row::FindAttrByKey(const std::string _key) const
+Attribute * Row::FindAttrByKey(const std::string _key) const
 {
-	for (auto attr : m_attrs) {
-		if (attr.GetKey() == _key)
-			return attr;
+	for (int i = 0; i < m_attrs.size();  i++) {
+		if (m_attrs.at(i).GetKey() == _key)
+			return &(const_cast<Attribute&>(m_attrs.at(i)));
 	}
+	return nullptr;
 }
 
 template<class T>

@@ -7,8 +7,8 @@ class Row {
 		Row();
 		Row(const std::vector<Attribute>& _attrs);
 		void AddAttr(Attribute& _attr);
-		std::vector<Attribute>& GetAttrs() const;
-		Attribute& FindAttrByKey(const std::string _key) const;
+		std::vector<Attribute> GetAttrs() const;
+		Attribute * FindAttrByKey(const std::string _key) const;
 		template<class T>
 		std::vector<Attribute>& FindAttrsByValue(const T& _value) const;
 	private:
