@@ -1,5 +1,6 @@
 #pragma once
-#include <GUI.h>
+#include <IGui.h>
+#include <IDb.h>
 
 class AppManager {
 	public:
@@ -8,7 +9,8 @@ class AppManager {
 		void Run(int width = 800, int height =  600);
         void Stop();
 	private:
-		GUI * window;
+		IGui * window;
+        IDb* dbManager;
         std::vector<UserInfo> FindUsers(const std::string& searchInput);
         bool FindUser(const std::string& firstName, const std::string& lastName);
         std::vector<IntStringStruct> GetGroups();

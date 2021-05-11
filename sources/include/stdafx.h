@@ -4,6 +4,8 @@
 #include <Const.h>
 #include <windows.h>
 #include <string>
+#include <boost/variant.hpp>
+
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
@@ -21,3 +23,5 @@ struct IntStringStruct {
 };
 
 using UserInfo = std::pair<int, std::pair<std::string, std::string>>;
+
+using AttrValue = boost::variant<std::string, int, double>;

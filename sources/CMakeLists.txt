@@ -14,6 +14,7 @@ add_executable(${TARGET}
     ./Attribute.cpp
     ./Row.cpp
     ./Gui.cpp
+    ./DbManager.cpp
 )
 
 MESSAGE("TOOLSET IS " ${MSVC_TOOLSET_VERSION})

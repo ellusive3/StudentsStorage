@@ -1,11 +1,13 @@
 #include <stdafx.h>
 #include <App.h>
 #include <Gui.h>
+#include <DbManager.h>
 #include <boost/bind.hpp>
 
 AppManager::AppManager() {
 	// TODO создать экземпляр GUI
 	window = nullptr;
+	dbManager = nullptr;
 }
 
 AppManager::~AppManager()
@@ -18,6 +20,7 @@ void AppManager::Run(int width, int height)
 {
 	// TODO запустить экземпляр GUI
 	window = new GUI(width, height);
+	dbManager = new DbManager();
 	ConnectCallBacks();
 }
 

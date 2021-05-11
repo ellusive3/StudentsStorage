@@ -1,5 +1,6 @@
 #include <stdafx.h>
 #include <Row.h>
+#include <IDb.h>
 
 Row::Row()
 {
@@ -32,13 +33,13 @@ Attribute * Row::FindAttrByKey(const std::string _key) const
 	return nullptr;
 }
 
-template<class T>
-std::vector<Attribute> & Row::FindAttrsByValue(const T & _value) const
+std::vector<Attribute>& Row::FindAttrsByValue(const AttrValue& _value) const
 {
 	std::vector<Attribute> result = std::vector<Attribute>();
 	for (auto attr : m_attrs) {
+		std::string value;
 		if (attr.GetValue() == _value)
-			result.push_back(attr);		
+			result.push_back(attr);
 	}
 	return result;
 }
