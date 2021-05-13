@@ -25,6 +25,7 @@ target_include_directories(${TARGET} PRIVATE
 
 IF (WIN32)
 target_link_libraries(${TARGET} PRIVATE
+	pqxx
 )
 ELSE()
 target_compile_options(${TARGET} PRIVATE
