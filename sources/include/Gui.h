@@ -2,13 +2,13 @@
 
 #include <IGui.h>
 
-/*class GUI : IGui {
+class GUI : public IGui {
 	public:
-		virtual void PrintUserInfo(const User& printedUser);
-		virtual void PrintCity(const City& _city);
-		virtual void PrintEvents(const std::vector<Event>& events);
+		GUI(int width, int height);
+		virtual void PrintUserInfo(const User& printedUser) override;
+		virtual void PrintCity(const City& _city) override;
+		virtual void PrintEvents(const std::vector<Event>& events) override;
 	private:
 
 	protected:
 };
-*/
