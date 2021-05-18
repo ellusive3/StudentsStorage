@@ -21,6 +21,7 @@ void AppManager::Run(int width, int height)
 	// TODO запустить экземпляр GUI
 	window = new GUI(width, height);
 	dbManager = new DbManager();
+	dbManager->Select("SELECT * FROM users", 0, Attribute());
 	ConnectCallBacks();
 }
 

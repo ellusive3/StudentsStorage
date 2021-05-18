@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <string>
 #include <boost/variant.hpp>
+#include <string_view>
 
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING

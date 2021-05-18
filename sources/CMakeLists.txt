@@ -19,6 +19,13 @@ add_executable(${TARGET}
 
 MESSAGE("TOOLSET IS " ${MSVC_TOOLSET_VERSION})
 
+find_package(PostgreSQL REQUIRED)
+IF (PostgreSQL_FOUND)
+	MESSAGE("FOUND PostgreSQL!")
+ELSE()
+	MESSAGE("PostgreSQL NOT FOUND!")
+ENDIF()
+
 
 target_include_directories(${TARGET} PRIVATE
     ./include
@@ -26,7 +33,7 @@ target_include_directories(${TARGET} PRIVATE
 
 IF (WIN32)
 target_link_libraries(${TARGET} PRIVATE
-	pqxx
+	libpq
 )
 ELSE()
 target_compile_options(${TARGET} PRIVATE
