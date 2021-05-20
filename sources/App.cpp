@@ -21,7 +21,6 @@ void AppManager::Run(int width, int height)
 	// TODO запустить экземпляр GUI
 	window = new GUI(width, height);
 	dbManager = new DbManager();
-	dbManager->Select("SELECT * FROM city WHERE %1 = #1", 1, Attribute("sname", "Test"));
 	ConnectCallBacks();
 }
 

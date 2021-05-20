@@ -1,6 +1,6 @@
 #pragma once
 #include <IGui.h>
-#include <IDb.h>
+#include <DbManager.h>
 
 class AppManager {
 	public:
@@ -10,7 +10,7 @@ class AppManager {
         void Stop();
 	private:
 		IGui * window;
-        IDb* dbManager;
+        DbManager * dbManager;
         std::vector<UserInfo> FindUsers(const std::string& searchInput);
         bool FindUser(const std::string& firstName, const std::string& lastName);
         std::vector<IntStringStruct> GetGroups();

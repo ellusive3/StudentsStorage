@@ -14,7 +14,7 @@ bool DbManager::ConnectToDb()
 	if (conn.isConnected())
 		return true;
 	try {
-		conn.Connect(_TSA("localhost@StudentsStorage"), _TSA("postgres"), _TSA("admin"), SA_PostgreSQL_Client);
+		conn.Connect(_TSA("localhost@StudentsStorage"), _TSA("root"), _TSA("root"), SA_PostgreSQL_Client);
 		printf("We are connected!\n");
 	}
 	catch (SAException& ex) {
@@ -39,7 +39,7 @@ bool DbManager::DisconnectFromDb()
 	return true;
 }
 
-std::string DbManager::PrepareRequest(const std::string& fmtReq, int countOfAttrs, Attribute ...)
+std::string DbManager::PrepareRequest(const std::string& fmtReq, int countOfAttrs, ...)
 {
 	std::string result = fmtReq;
 	va_list factor;
@@ -76,38 +76,6 @@ std::string DbManager::PrepareRequest(const std::string& fmtReq, int countOfAttr
 	return result;
 }
 
-std::vector<Row> DbManager::Select(const std::string& selectFmt, int countOfAttrs, Attribute args...)
-{
-	std::vector<Row> result = std::vector<Row>();
-	if (ConnectToDb()) {
-		std::string preparedSelect = PrepareRequest(selectFmt, countOfAttrs, args);
-		SACommand select(&conn, _TSA(preparedSelect.c_str()));
-		select.Execute();
-		while (select.FetchNext()) {
-			Row addingRow;
-			long colCount = select.FieldCount();
-			for (int i = 1; i < colCount + 1; i++) {
-				SAField& sField = select.Field(i);
-				std::string fieldName = sField.Name();
-				AttrValue fieldValue;
-				if (sField.DataType() == SADataType_t::SA_dtDouble)
-					fieldValue = sField.asDouble();
-				else if (sField.DataType() == SADataType_t::SA_dtInt64 ||
-					sField.DataType() == SADataType_t::SA_dtUInt64 ||
-					sField.DataType() == SADataType_t::SA_dtLong)
-					fieldValue = (int) sField.asInt64();
-				else if (sField.DataType() == SADataType_t::SA_dtString)
-					fieldValue = std::string(sField.asString().GetMultiByteChars());
-				Attribute addingAttr(fieldName, fieldValue);
-				addingRow.AddAttr(addingAttr);
-			}
-			result.push_back(addingRow);
-		}
-		DisconnectFromDb();
-	}
-	return result;
-}
-
 int DbManager::Delete(const std::string& deleteFmt, int countOfAttrs, Attribute args...)
 {
 	va_list factor;
@@ -130,17 +98,5 @@ std::vector<Row> DbManager::Update(const std::string& updateFmt, int countOfAttr
 	}
 	va_end(factor);
 	return std::vector<Row>();
-}
-
-int DbManager::Insert(const std::string& insertFmt, int countOfAttrs, Attribute args...)
-{
-	va_list factor;
-	va_start(factor, &countOfAttrs);
-	while (countOfAttrs > 0) {
-		Attribute _attr = va_arg(factor, Attribute);
-		countOfAttrs--;
-	}
-	va_end(factor);
-	return 0;
 }
 
