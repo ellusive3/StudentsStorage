@@ -1,8 +1,11 @@
 #include <stdafx.h>
 #include <App.h>
+#include <clocale>
 
 int main(void)
 {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 	try {
 		AppManager application;
 		application.Run(1024, 768);

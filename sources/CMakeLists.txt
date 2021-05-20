@@ -19,23 +19,24 @@ add_executable(${TARGET}
 
 MESSAGE("TOOLSET IS " ${MSVC_TOOLSET_VERSION})
 
-find_package(PostgreSQL REQUIRED)
-IF (PostgreSQL_FOUND)
-	MESSAGE("FOUND PostgreSQL!")
-ELSE()
-	MESSAGE("PostgreSQL NOT FOUND!")
-ENDIF()
-
-
 target_include_directories(${TARGET} PRIVATE
     ./include
 )
 
 IF (WIN32)
 target_link_libraries(${TARGET} PRIVATE
-	libpq
+	user32
+	version
+	oleaut32
+	ole32
+	sqlapis
+	sqlapius
 )
 ELSE()
 target_compile_options(${TARGET} PRIVATE
 )
 ENDIF()
+
+#add_custom_command(TARGET libpq POST_BUILD
+#    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:libpq> ${targetfile}
+#)
