@@ -1,4 +1,5 @@
 #pragma once
+#include <stdafx.h>
 #include <IDb.h>
 #include <sqlapi/SQLAPI.h>
 
@@ -53,6 +54,8 @@ class DbManager {
 			}
 			return result;
 		}
+
+		std::vector<UserInfo> FindUsers(const std::string& regQuery);
 	private:
 		SAConnection conn;
 		bool ConnectToDb();

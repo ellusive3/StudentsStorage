@@ -14,7 +14,7 @@ bool DbManager::ConnectToDb()
 	if (conn.isConnected())
 		return true;
 	try {
-		conn.Connect(_TSA("localhost@StudentsStorage"), _TSA("root"), _TSA("root"), SA_PostgreSQL_Client);
+		conn.Connect(_TSA("localhost@StudentsStorage"), _TSA("postgres"), _TSA("admin"), SA_PostgreSQL_Client);
 		printf("We are connected!\n");
 	}
 	catch (SAException& ex) {
@@ -98,5 +98,15 @@ std::vector<Row> DbManager::Update(const std::string& updateFmt, int countOfAttr
 	}
 	va_end(factor);
 	return std::vector<Row>();
+}
+
+std::vector<UserInfo> DbManager::FindUsers(const std::string& regQuery)
+{
+	std::vector<UserInfo> result;
+	std::vector<Row> rawResult;
+	rawResult = Select("SELECT * FROM user WHERE %1 LIKE #1 OR %2 LIKE #2", 1, 
+		new Attribute("sfirstname", regQuery),
+		new Attribute("slastname", regQuery));
+	return result;
 }
 

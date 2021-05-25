@@ -3,6 +3,8 @@
 #include <Gui.h>
 #include <DbManager.h>
 #include <boost/bind.hpp>
+#include <qapplication.h>
+
 
 AppManager::AppManager() {
 	// TODO создать экземпляр GUI
@@ -16,12 +18,15 @@ AppManager::~AppManager()
 	delete(window);
 }
 
-void AppManager::Run(int width, int height)
+int AppManager::Run(int width, int height)
 {
-	// TODO запустить экземпляр GUI
+	int argc = 0;
+	char** argv = new char* (new char());
+	QApplication app(argc, argv);
 	window = new GUI(width, height);
 	dbManager = new DbManager();
 	ConnectCallBacks();
+	return app.exec();
 }
 
 void AppManager::Stop()
@@ -68,7 +73,7 @@ void AppManager::ConnectCallBacks()
 
 std::vector<UserInfo> AppManager::FindUsers(const std::string& searchInput)
 {
-	return std::vector<UserInfo>();
+	return  dbManager->FindUsers(searchInput);
 }
 
 bool AppManager::FindUser(const std::string& firstName, const std::string& lastName)

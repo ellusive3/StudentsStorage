@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.14)
-LINK_DIRECTORIES(libraries)
 project(StudentsStorage)
+LINK_DIRECTORIES(libraries)
 add_subdirectory(sources)

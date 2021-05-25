@@ -2,16 +2,10 @@
 #include <App.h>
 #include <clocale>
 
-int main(void)
+int main(int argc, char* argv[])
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	try {
-		AppManager application;
-		application.Run(1024, 768);
-	}
-	catch (...) {
-		return RETURN_RUNTIME_ERROR;
-	}
-	return RETURN_SUCCESS;
-}
+	AppManager application;
+	return application.Run(1920, 1080);
+};
