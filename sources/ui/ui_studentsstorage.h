@@ -6,13 +6,14 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_STUDENTSSTORAGE_H
-#define UI_STUDENTSSTORAGE_H
+#ifndef UI_STUDENT_STORAGE_H
+#define UI_STUDENT_STORAGE_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLineEdit>
@@ -39,10 +40,10 @@ public:
     QListWidget *listSection;
     QWidget *horizontalLayoutWidget_2;
     QHBoxLayout *horizontalLayout_3;
-    QLineEdit *searchStudentLineEdit;
+    QComboBox *searchUserComboBox;
     QPushButton *searchStudentBtn;
     QWidget *verticalLayoutWidget_3;
-    QVBoxLayout *verticalLayout_7;
+    QVBoxLayout *dynamicContentLayout;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -52,6 +53,7 @@ public:
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(1116, 785);
         MainWindow->setMinimumSize(QSize(800, 600));
+        MainWindow->setAutoFillBackground(false);
         MainWindow->setStyleSheet(QLatin1String(".verticalLayout_4 {\n"
 "	width: 300px;\n"
 "}"));
@@ -104,14 +106,22 @@ public:
 
         horizontalLayoutWidget_2 = new QWidget(centralwidget);
         horizontalLayoutWidget_2->setObjectName(QStringLiteral("horizontalLayoutWidget_2"));
-        horizontalLayoutWidget_2->setGeometry(QRect(310, 10, 216, 25));
+        horizontalLayoutWidget_2->setGeometry(QRect(310, 10, 301, 25));
         horizontalLayout_3 = new QHBoxLayout(horizontalLayoutWidget_2);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        searchStudentLineEdit = new QLineEdit(horizontalLayoutWidget_2);
-        searchStudentLineEdit->setObjectName(QStringLiteral("searchStudentLineEdit"));
+        searchUserComboBox = new QComboBox(horizontalLayoutWidget_2);
+        searchUserComboBox->setObjectName(QStringLiteral("searchUserComboBox"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(searchUserComboBox->sizePolicy().hasHeightForWidth());
+        searchUserComboBox->setSizePolicy(sizePolicy);
+        searchUserComboBox->setInputMethodHints(Qt::ImhNone);
+        searchUserComboBox->setEditable(true);
+        searchUserComboBox->setFrame(true);
 
-        horizontalLayout_3->addWidget(searchStudentLineEdit);
+        horizontalLayout_3->addWidget(searchUserComboBox);
 
         searchStudentBtn = new QPushButton(horizontalLayoutWidget_2);
         searchStudentBtn->setObjectName(QStringLiteral("searchStudentBtn"));
@@ -121,14 +131,14 @@ public:
         verticalLayoutWidget_3 = new QWidget(centralwidget);
         verticalLayoutWidget_3->setObjectName(QStringLiteral("verticalLayoutWidget_3"));
         verticalLayoutWidget_3->setGeometry(QRect(310, 50, 781, 691));
-        verticalLayout_7 = new QVBoxLayout(verticalLayoutWidget_3);
-        verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
-        verticalLayout_7->setSizeConstraint(QLayout::SetNoConstraint);
-        verticalLayout_7->setContentsMargins(0, 0, 0, 0);
+        dynamicContentLayout = new QVBoxLayout(verticalLayoutWidget_3);
+        dynamicContentLayout->setObjectName(QStringLiteral("dynamicContentLayout"));
+        dynamicContentLayout->setSizeConstraint(QLayout::SetNoConstraint);
+        dynamicContentLayout->setContentsMargins(0, 0, 0, 0);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1116, 21));
+        menubar->setGeometry(QRect(0, 0, 1116, 20));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QStringLiteral("statusbar"));
@@ -157,7 +167,7 @@ public:
         ___qlistwidgetitem3->setText(QApplication::translate("MainWindow", "\320\226\320\270\320\267\320\275\321\214 \320\270\320\275\321\201\321\202\320\270\321\202\321\203\321\202\320\260", Q_NULLPTR));
         listSection->setSortingEnabled(__sortingEnabled);
 
-        searchStudentLineEdit->setPlaceholderText(QApplication::translate("MainWindow", "\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \320\270\320\274\321\217 \321\201\321\202\321\203\320\264\320\265\320\275\321\202\320\260", Q_NULLPTR));
+        searchUserComboBox->setPlaceholderText(QApplication::translate("MainWindow", "\320\235\320\260\321\207\320\275\320\270\321\202\320\265 \320\262\320\262\320\276\320\264\320\270\321\202\321\214 \320\270\320\274\321\217 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", Q_NULLPTR));
         searchStudentBtn->setText(QApplication::translate("MainWindow", "\320\235\320\260\320\271\321\202\320\270", Q_NULLPTR));
     } // retranslateUi
 
@@ -169,4 +179,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_STUDENTSSTORAGE_H
+#endif // UI_STUDENT_STORAGE_H

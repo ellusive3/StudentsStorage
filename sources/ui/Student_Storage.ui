@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
    <string notr="true">.verticalLayout_4 {
 	width: 300px;
@@ -110,15 +113,30 @@ margin-top: -20px;</string>
      <rect>
       <x>310</x>
       <y>10</y>
-      <width>216</width>
+      <width>301</width>
       <height>25</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLineEdit" name="searchStudentLineEdit">
+      <widget class="QComboBox" name="searchUserComboBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="inputMethodHints">
+        <set>Qt::ImhNone</set>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
        <property name="placeholderText">
-        <string>Введите имя студента</string>
+        <string>Начните вводить имя пользователя</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -140,7 +158,7 @@ margin-top: -20px;</string>
       <height>691</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_7">
+    <layout class="QVBoxLayout" name="dynamicContentLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetNoConstraint</enum>
      </property>
@@ -153,7 +171,7 @@ margin-top: -20px;</string>
      <x>0</x>
      <y>0</y>
      <width>1116</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
