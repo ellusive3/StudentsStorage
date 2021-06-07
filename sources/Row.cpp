@@ -33,7 +33,7 @@ Attribute * Row::FindAttrByKey(const std::string _key) const
 	return nullptr;
 }
 
-std::vector<Attribute>& Row::FindAttrsByValue(const AttrValue& _value) const
+std::vector<Attribute> Row::FindAttrsByValue(const AttrValue& _value) const
 {
 	std::vector<Attribute> result = std::vector<Attribute>();
 	for (auto attr : m_attrs) {

@@ -38,6 +38,7 @@ target_include_directories(${TARGET} PRIVATE
 IF (WIN32)
 target_link_libraries(${TARGET} PUBLIC Qt5::Widgets)
 target_link_libraries(${TARGET} PRIVATE
+	libpq
 	user32
 	version
 	oleaut32

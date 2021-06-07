@@ -1,11 +1,12 @@
 #include <stdafx.h>
 #include <Gui.h>
+#include <qlistwidget.h>
 
 GUI::GUI(int width, int height) :
 	ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
-	connect(ui->searchStudentBtn, &QPushButton::clicked, this, &GUI::onSearchUserButtonClicked);
+	connect(ui->searchUserComboBox->lineEdit(), &QLineEdit::textChanged, this, &GUI::onSearchComboBoxTextChanged);
 	this->setBaseSize(QSize(width, height));
 	this->show();
 }
@@ -29,7 +30,8 @@ void GUI::PrintEvents(const std::vector<Event>& events)
 
 void GUI::onSearchUserButtonClicked()
 {
-	std::string searchQuery = ui->searchStudentLineEdit->text().toStdString();
-	if (!FindUsersSignal.empty())
-		FindUsersSignal(searchQuery);
+}
+
+void GUI::onSearchComboBoxTextChanged(const QString& text)
+{
 }

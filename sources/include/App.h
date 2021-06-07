@@ -6,7 +6,7 @@ class AppManager {
 	public:
 		AppManager();
 		~AppManager();
-		int Run(int width = 800, int height =  600);
+		void Run(int width = 800, int height =  600);
         void Stop();
 	private:
 		IGui * window;

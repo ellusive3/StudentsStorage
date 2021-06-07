@@ -18,7 +18,7 @@ AppManager::~AppManager()
 	delete(window);
 }
 
-int AppManager::Run(int width, int height)
+void AppManager::Run(int width, int height)
 {
 	int argc = 0;
 	char** argv = new char* (new char());
@@ -26,7 +26,7 @@ int AppManager::Run(int width, int height)
 	window = new GUI(width, height);
 	dbManager = new DbManager();
 	ConnectCallBacks();
-	return app.exec();
+	app.exec();
 }
 
 void AppManager::Stop()

@@ -103,10 +103,17 @@ std::vector<Row> DbManager::Update(const std::string& updateFmt, int countOfAttr
 std::vector<UserInfo> DbManager::FindUsers(const std::string& regQuery)
 {
 	std::vector<UserInfo> result;
-	std::vector<Row> rawResult;
-	rawResult = Select("SELECT * FROM user WHERE %1 LIKE #1 OR %2 LIKE #2", 1, 
+	std::vector<Row> rawResults;
+	rawResults = Select("SELECT * FROM \"user\" WHERE %1 ~* #1 OR %2 ~* #2", 2, 
 		new Attribute("sfirstname", regQuery),
 		new Attribute("slastname", regQuery));
+	for (auto rawResult : rawResults) {
+		UserInfo addingUser;
+		addingUser.first = boost::get<int>(rawResult.FindAttrByKey("id")->GetValue());
+		addingUser.second.first = boost::get<std::string>(rawResult.FindAttrByKey("sfirstname")->GetValue());
+		addingUser.second.second = boost::get<std::string>(rawResult.FindAttrByKey("slastname")->GetValue());
+		result.push_back(addingUser);
+	}
 	return result;
 }
 

@@ -14,28 +14,35 @@ class DbManager {
 			if (ConnectToDb()) {
 				std::string preparedSelect = PrepareRequest(selectFmt, countOfAttrs, std::forward<Args>(args)...);
 				SACommand select(&conn, _TSA(preparedSelect.c_str()));
-				select.Execute();
-				while (select.FetchNext()) {
-					Row addingRow;
-					long colCount = select.FieldCount();
-					for (int i = 1; i < colCount + 1; i++) {
-						SAField& sField = select.Field(i);
-						std::string fieldName = sField.Name();
-						AttrValue fieldValue;
-						if (sField.DataType() == SADataType_t::SA_dtDouble)
-							fieldValue = sField.asDouble();
-						else if (sField.DataType() == SADataType_t::SA_dtInt64 ||
-							sField.DataType() == SADataType_t::SA_dtUInt64 ||
-							sField.DataType() == SADataType_t::SA_dtLong)
-							fieldValue = (int)sField.asInt64();
-						else if (sField.DataType() == SADataType_t::SA_dtString)
-							fieldValue = std::string(sField.asString().GetMultiByteChars());
-						Attribute addingAttr(fieldName, fieldValue);
-						addingRow.AddAttr(addingAttr);
+				try {
+					select.Execute();
+					while (select.FetchNext()) {
+						Row addingRow;
+						long colCount = select.FieldCount();
+						for (int i = 1; i < colCount + 1; i++) {
+							SAField& sField = select.Field(i);
+							std::string fieldName = sField.Name();
+							AttrValue fieldValue;
+							if (sField.DataType() == SADataType_t::SA_dtDouble)
+								fieldValue = sField.asDouble();
+							else if (sField.DataType() == SADataType_t::SA_dtInt64 ||
+								sField.DataType() == SADataType_t::SA_dtUInt64 ||
+								sField.DataType() == SADataType_t::SA_dtLong)
+								fieldValue = (int)sField.asInt64();
+							else if (sField.DataType() == SADataType_t::SA_dtString)
+								fieldValue = std::string(sField.asString().GetMultiByteChars());
+							Attribute addingAttr(fieldName, fieldValue);
+							addingRow.AddAttr(addingAttr);
+						}
+						result.push_back(addingRow);
 					}
-					result.push_back(addingRow);
+					DisconnectFromDb();
 				}
-				DisconnectFromDb();
+				catch (SAException& ex) {
+					printf(ex.ErrMessage());
+					DisconnectFromDb();
+					return result;
+				}
 			}
 			return result;
 		}

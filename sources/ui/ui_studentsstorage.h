@@ -167,7 +167,6 @@ public:
         ___qlistwidgetitem3->setText(QApplication::translate("MainWindow", "\320\226\320\270\320\267\320\275\321\214 \320\270\320\275\321\201\321\202\320\270\321\202\321\203\321\202\320\260", Q_NULLPTR));
         listSection->setSortingEnabled(__sortingEnabled);
 
-        searchUserComboBox->setPlaceholderText(QApplication::translate("MainWindow", "\320\235\320\260\321\207\320\275\320\270\321\202\320\265 \320\262\320\262\320\276\320\264\320\270\321\202\321\214 \320\270\320\274\321\217 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", Q_NULLPTR));
         searchStudentBtn->setText(QApplication::translate("MainWindow", "\320\235\320\260\320\271\321\202\320\270", Q_NULLPTR));
     } // retranslateUi
 

@@ -17,4 +17,5 @@ class GUI : public IGui, public QMainWindow, public Ui::MainWindow {
 		Ui::MainWindow* ui;
 	protected:
 		void onSearchUserButtonClicked();
+		void onSearchComboBoxTextChanged(const QString& text);
 };
