@@ -13,7 +13,7 @@ class IGui {
     public:
         /*Interface signals*/
         boost::signal<std::vector<UserInfo>(const std::string&)> FindUsersSignal;
-        boost::signal<bool(const std::string&, const std::string&)> FindUserSignal;
+        boost::signal<User(const std::string&, const std::string&)> FindUserSignal;
         boost::signal < std::vector<IntStringStruct>()> GetGroupsSignal;
         boost::signal<bool(const std::string&, const std::string&, const std::string &, int)>  AddUserSignal;
         boost::signal<std::vector<IntStringStruct>()> GetStatesSignal;

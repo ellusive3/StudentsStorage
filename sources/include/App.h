@@ -1,6 +1,7 @@
 #pragma once
 #include <IGui.h>
 #include <DbManager.h>
+#include <User.h>
 
 class AppManager {
 	public:
@@ -12,7 +13,7 @@ class AppManager {
 		IGui * window;
         DbManager * dbManager;
         std::vector<UserInfo> FindUsers(const std::string& searchInput);
-        bool FindUser(const std::string& firstName, const std::string& lastName);
+        User FindUser(const std::string& firstName, const std::string& lastName);
         std::vector<IntStringStruct> GetGroups();
         bool AddUser(const std::string& firstName, const std::string& lastName, const std::string& thirdName, int groupId);
         std::vector<IntStringStruct> GetStates();

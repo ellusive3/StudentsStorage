@@ -2,6 +2,7 @@
 #include <stdafx.h>
 #include <IDb.h>
 #include <sqlapi/SQLAPI.h>
+#include <User.h>
 
 class DbManager {
 	public:
@@ -63,6 +64,8 @@ class DbManager {
 		}
 
 		std::vector<UserInfo> FindUsers(const std::string& regQuery);
+		User FindUser(const std::string& firstName, const std::string& lastName);
+		std::vector<IntStringStruct> GetAllGroups();
 	private:
 		SAConnection conn;
 		bool ConnectToDb();

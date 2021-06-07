@@ -76,14 +76,14 @@ std::vector<UserInfo> AppManager::FindUsers(const std::string& searchInput)
 	return  dbManager->FindUsers(searchInput);
 }
 
-bool AppManager::FindUser(const std::string& firstName, const std::string& lastName)
+User AppManager::FindUser(const std::string& firstName, const std::string& lastName)
 {
-	return true;
+	return dbManager->FindUser(firstName, lastName);
 }
 
 std::vector<IntStringStruct> AppManager::GetGroups()
 {
-	return std::vector<IntStringStruct>();
+	return dbManager->GetAllGroups();
 }
 
 bool AppManager::AddUser(const std::string& firstName, const std::string& lastName, const std::string& thirdName, int groupId)

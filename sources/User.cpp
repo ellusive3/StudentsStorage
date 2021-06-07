@@ -10,13 +10,13 @@
 		groupId = 0;
 	}
 
-	User::User(std::string _firstName, std::string _lastName, std::string _thirdName, int _groupId)
+	User::User(std::string _firstName, std::string _lastName, std::string _thirdName, int _groupId, double _avgDisciplineScore)
 	{
 		firstName = _firstName;
 		lastName = _lastName;
 		thirdName = _thirdName;
 		groupId = _groupId;
-		avgDisciplineScore = 0.0;
+		avgDisciplineScore = _avgDisciplineScore;
 	}
 
 	std::string User::GetFirstName() const
@@ -38,7 +38,7 @@
 		return avgDisciplineScore;
 	}
 
-	int User::GetGroupId()
+	int User::GetGroupId() const
 	{
 		return groupId;
 	}

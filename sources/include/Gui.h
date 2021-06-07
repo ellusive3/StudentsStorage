@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <ui_studentsstorage.h>
+#include <User.h>
 
 
 class GUI : public IGui, public QMainWindow, public Ui::MainWindow {
@@ -15,7 +16,8 @@ class GUI : public IGui, public QMainWindow, public Ui::MainWindow {
 		virtual void PrintEvents(const std::vector<Event>& events) override;
 	private:
 		Ui::MainWindow* ui;
+		void ClearLayout(QLayout* layout);
 	protected:
-		void onSearchUserButtonClicked();
 		void onSearchComboBoxTextChanged(const QString& text);
+		void onSearchUserButtonClicked();
 };

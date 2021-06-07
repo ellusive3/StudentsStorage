@@ -6,6 +6,7 @@
 #include <string>
 #include <boost/variant.hpp>
 #include <string_view>
+#include <qregexp.h>
 
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING

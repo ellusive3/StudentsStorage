@@ -100,6 +100,44 @@ std::vector<Row> DbManager::Update(const std::string& updateFmt, int countOfAttr
 	return std::vector<Row>();
 }
 
+User DbManager::FindUser(const std::string& firstName, const std::string& lastName)
+{
+	// User result;
+	User usr;
+	std::vector<Row> rawResults;
+	rawResults = Select("SELECT sfirstName, slastname, sthirdname, idgroup, dblaveragedisciplinescore FROM \"user\" where %1 = #1 and %2 = #2", 
+		2,
+		new Attribute("sfirstname", firstName),
+		new Attribute("slastname", lastName));
+
+	if (rawResults.size() == 1)
+	{
+		usr = User
+		(
+			boost::get<std::string>(rawResults[0].FindAttrByKey("sfirstname")->GetValue()),
+			boost::get<std::string>(rawResults[0].FindAttrByKey("slastname")->GetValue()),
+			boost::get<std::string>(rawResults[0].FindAttrByKey("sthirdname")->GetValue()),
+			const_cast<int&>(boost::get<int>(rawResults[0].FindAttrByKey("idgroup")->GetValue())),
+			boost::get<double>(rawResults[0].FindAttrByKey("dblaveragedisciplinescore")->GetValue())
+		);
+	}
+	return usr;
+}
+
+std::vector<IntStringStruct> DbManager::GetAllGroups()
+{
+	std::vector<IntStringStruct> results;
+	std::vector<Row> rawResults;
+	rawResults = Select("SELECT * FROM  \"group\"", 0);
+	for (auto rawResult : rawResults) {
+		IntStringStruct result;
+		result.id = boost::get<int>(rawResult.FindAttrByKey("id")->GetValue());
+		result.groupName = boost::get<std::string>(rawResult.FindAttrByKey("sname")->GetValue());
+		results.push_back(result);
+	}
+	return results;
+}
+
 std::vector<UserInfo> DbManager::FindUsers(const std::string& regQuery)
 {
 	std::vector<UserInfo> result;
