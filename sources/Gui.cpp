@@ -62,13 +62,45 @@ void GUI::PrintUserInfo(const User& printedUser)
 	view->setEditTriggers(QAbstractItemView::EditTrigger::SelectedClicked);
 	view->setVisible(true);
 	QStandardItemModel* model = new QStandardItemModel(this);
+	int currentCol = 0;
 	model->insertRows(0, 1);
-	model->insertColumns(0, 1);
+	model->insertColumns(currentCol, 1);
 	view->setModel(model);
-	QModelIndex & index = model->index(0, 0);
-	model->setHeaderData(0, Qt::Horizontal, QObject::tr("Object/Mark"));
-	if (!FindUserMarksSignal.empty()) {
+	model->setHeaderData(currentCol++, Qt::Horizontal, QObject::tr("Object/Mark"));
+
+	if (!FindUserMarksSignal.empty() && !GetObjectsSignal.empty()) {
 		MarkList marks = FindUserMarksSignal(printedUser.GetUserId());
+		for (auto mark : marks) {
+			auto indexList = model->match(model->index(1, 0), Qt::DisplayRole, tr(mark.second.first.c_str()));
+			QModelIndex objectIndex;
+			if (indexList.empty()) {
+				// Если нет еще такого предмета в таблице, то добавим его, иначе просто проставим оценку в нужной дате
+				int currentRow = model->rowCount() - 1;
+				model->insertRows(currentRow, 1);
+				objectIndex = model->index(currentRow, 0);
+				model->setData(objectIndex, tr(mark.second.first.c_str()));
+			}
+			else {
+				// Такой предмет уже есть в таблице, запомним его индекс
+				objectIndex = indexList.at(0);
+			}
+			// На этом моменте у нас полюбому есть индекс строки с предметом
+			// Из текущей оценки возьмем дату, попробуем найти существующую колонку
+			int neededIndex = -1;
+			for (int colIndex = 0; colIndex < model->columnCount(); colIndex++) {
+				if (model->headerData(colIndex, Qt::Horizontal, Qt::DisplayRole).toString() == boost::posix_time::to_simple_string(mark.second.second.first).c_str()) {
+					neededIndex = colIndex;
+					break;
+				}
+			}
+			if (neededIndex == -1) {
+				model->insertColumns(currentCol, 1);
+				model->setHeaderData(currentCol, Qt::Horizontal, QObject::tr(boost::posix_time::to_simple_string(mark.second.second.first).c_str()));
+				neededIndex = currentCol++;
+			}
+			QModelIndex addingMarkIndex = model->index(objectIndex.row(), neededIndex);
+			model->setData(addingMarkIndex, QString::number(mark.second.second.second));
+		}
 	}
 
 	ui->dynamicContentLayout->addWidget(userNameLabel);

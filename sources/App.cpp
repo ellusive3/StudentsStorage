@@ -123,7 +123,7 @@ bool AppManager::AddCity(int stateId, const std::string& cityName, double latitu
 
 std::vector<IntStringStruct> AppManager::GetObjects()
 {
-	return std::vector<IntStringStruct>();
+	return dbManager->GetAllObjects();
 }
 
 std::vector<IntStringStruct> AppManager::GetThemes()

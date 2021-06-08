@@ -32,4 +32,4 @@ using AttrValue = boost::variant<std::string, int, double, boost::posix_time::pt
 
 using Mark = std::pair<boost::posix_time::ptime, int>;
 
-using MarkList = std::vector<std::pair<int, Mark>>;
+using MarkList = std::vector<std::pair<int, std::pair<std::string, Mark>>>;

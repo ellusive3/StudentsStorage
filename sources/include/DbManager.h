@@ -76,6 +76,7 @@ class DbManager {
 		User FindUser(const std::string& firstName, const std::string& lastName);
 		std::vector<IntStringStruct> GetAllGroups();
 		MarkList FindUserMarks(int userId);
+		std::vector<IntStringStruct> GetAllObjects();
 	private:
 		SAConnection conn;
 		bool ConnectToDb();

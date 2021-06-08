@@ -143,15 +143,17 @@ MarkList DbManager::FindUserMarks(int userId)
 {
 	std::vector<Row> rawResults;
 	MarkList results;
-	rawResults = Select("SELECT ob.id, ob.sname, uob.nmarkvalue, uob.dmarkdate FROM userobject uob JOIN object ob ON uob.idobject = ob.id WHERE %1 = #1",
+	rawResults = Select("SELECT ob.id, ob.sname, uob.nmarkvalue, uob.dmarkdate FROM \"userobject\" uob JOIN \"object\" ob ON uob.idobject = ob.id WHERE %1 = #1",
 		1, 
 		new Attribute("uob.iduser", userId));
 
 	for (auto rawResult : rawResults)
 	{
-		std::pair<int, Mark> result(boost::get<int>(rawResult.FindAttrByKey("id")->GetValue()),
-			Mark(boost::get<boost::posix_time::ptime>(rawResult.FindAttrByKey("dmarkdate")->GetValue()),
-				boost::get<int>(rawResult.FindAttrByKey("nmarkvalue")->GetValue())));
+		std::pair<int, std::pair<std::string, Mark>> result(boost::get<int>(rawResult.FindAttrByKey("id")->GetValue()),
+			std::make_pair(
+				boost::get<std::string>(rawResult.FindAttrByKey("sname")->GetValue()),
+				Mark(boost::get<boost::posix_time::ptime>(rawResult.FindAttrByKey("dmarkdate")->GetValue()),
+			boost::get<int>(rawResult.FindAttrByKey("nmarkvalue")->GetValue()))));
 		results.push_back(result);
 		printf("id = %d, sname = %s, nmarkvalue = %d, dmarkdate = %s\n\n",
 			boost::get<int>(rawResult.FindAttrByKey("id")->GetValue()),
@@ -159,6 +161,20 @@ MarkList DbManager::FindUserMarks(int userId)
 			boost::get<int>(rawResult.FindAttrByKey("nmarkvalue")->GetValue()),
 			boost::posix_time::to_iso_extended_string(boost::get<boost::posix_time::ptime>(rawResult.FindAttrByKey("dmarkdate")->GetValue())).c_str()
 		);
+	}
+	return results;
+}
+
+std::vector<IntStringStruct> DbManager::GetAllObjects()
+{
+	std::vector<Row> rawResults;
+	std::vector<IntStringStruct> results;
+	rawResults = Select("SELECT * FROM \"object\"", 0);
+	for (auto rawResult : rawResults) {
+		IntStringStruct result;
+		result.id = boost::get<int>(rawResult.FindAttrByKey("id")->GetValue());
+		result.groupName = boost::get<std::string>(rawResult.FindAttrByKey("sname")->GetValue());
+		results.push_back(result);
 	}
 	return results;
 }
