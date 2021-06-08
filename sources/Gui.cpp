@@ -2,6 +2,8 @@
 #include <Gui.h>
 #include <qlistwidget.h>
 #include <qlabel.h>
+#include <qtableview.h>
+#include <qstandarditemmodel.h>
 
 GUI::GUI(int width, int height) :
 	ui(new Ui::MainWindow())
@@ -56,11 +58,23 @@ void GUI::PrintUserInfo(const User& printedUser)
 	groupLabel->setText(QString(groupStr.c_str()));
 	groupLabel->setVisible(true);
 
+	QTableView* view = new QTableView(this);
+	view->setEditTriggers(QAbstractItemView::EditTrigger::SelectedClicked);
+	view->setVisible(true);
+	QStandardItemModel* model = new QStandardItemModel(this);
+	model->insertRows(0, 1);
+	model->insertColumns(0, 1);
+	view->setModel(model);
+	QModelIndex & index = model->index(0, 0);
+	model->setHeaderData(0, Qt::Horizontal, QObject::tr("Object/Mark"));
+	if (!FindUserMarksSignal.empty()) {
+		MarkList marks = FindUserMarksSignal(printedUser.GetUserId());
+	}
 
 	ui->dynamicContentLayout->addWidget(userNameLabel);
 	ui->dynamicContentLayout->addWidget(groupLabel);
 	ui->dynamicContentLayout->addWidget(avgDiscMark);
-	//TODO отрисовать пользователя на форме
+	ui->dynamicContentLayout->addWidget(view);
 }
 
 void GUI::PrintCity(const City& _city)

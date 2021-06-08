@@ -29,6 +29,7 @@ class IGui {
         boost::signal<bool(int, const std::string&)> AddLinkSignal;
         boost::signal<std::vector<Event>(int, int, int)> GetEventsSignal;
         boost::signal<bool(int, int, int)> AddEventSignal;
+        boost::signal<MarkList(int)> FindUserMarksSignal;
         /*Interface functions*/
         virtual void PrintUserInfo(const User& printedUser) = 0;
         virtual void PrintEvents(const std::vector<Event>& events) = 0;

@@ -7,6 +7,8 @@
 #include <boost/variant.hpp>
 #include <string_view>
 #include <qregexp.h>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <map>
 
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
@@ -26,4 +28,8 @@ struct IntStringStruct {
 
 using UserInfo = std::pair<int, std::pair<std::string, std::string>>;
 
-using AttrValue = boost::variant<std::string, int, double>;
+using AttrValue = boost::variant<std::string, int, double, boost::posix_time::ptime>;
+
+using Mark = std::pair<boost::posix_time::ptime, int>;
+
+using MarkList = std::vector<std::pair<int, Mark>>;
