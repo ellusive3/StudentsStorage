@@ -14,7 +14,7 @@ bool DbManager::ConnectToDb()
 	if (conn.isConnected())
 		return true;
 	try {
-		conn.Connect(_TSA("localhost@StudentsStorage"), _TSA("postgres"), _TSA("admin"), SA_PostgreSQL_Client);
+		conn.Connect(_TSA("localhost@postgres"), _TSA("postgres"), _TSA("postgres"), SA_PostgreSQL_Client);
 		printf("We are connected!\n");
 	}
 	catch (SAException& ex) {

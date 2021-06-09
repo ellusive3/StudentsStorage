@@ -26,6 +26,7 @@ class GUI : public IGui, public QMainWindow, public Ui::MainWindow {
 		virtual void PrintUserInfo(const User& printedUser) override;
 		virtual void PrintCity(const City& _city) override;
 		virtual void PrintEvents(const std::vector<Event>& events) override;
+		virtual void CompleteUsers() override; 
 	private:
 		Ui::MainWindow* ui;
 		void ClearLayout(QLayout* layout);

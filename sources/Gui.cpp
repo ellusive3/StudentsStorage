@@ -31,6 +31,7 @@ GUI::GUI(int width, int height) :
 	ui->setupUi(this);
 	connect(ui->searchStudentBtn, &QPushButton::clicked, this, &GUI::onSearchUserButtonClicked);
 	connect(ui->listSection, &QListWidget::itemClicked, this, &GUI::onSectionClicked);
+	//connect(ui->searchUserComboBox, &QComboBox::currentTextChanged, this, &GUI::onSearchComboBoxTextChanged);
 	this->setBaseSize(QSize(width, height));
 	this->show();
 }
@@ -169,4 +170,19 @@ void GUI::onSearchUserButtonClicked()
 		}
 	}
 	// TODO вернуть ошибку, что формат введенных данных был неверен
+}
+
+void GUI::CompleteUsers()
+{
+	if (!FindUsersSignal.empty())
+	{
+		std::vector<UserInfo> userInfo = FindUsersSignal("");
+
+		for (auto user : userInfo)
+		{
+			//this->blockSignals(true);
+			std::string resultStr = user.second.first + " " + user.second.second;
+			ui->searchUserComboBox->addItem(tr(resultStr.c_str()));
+		}
+	}
 }

@@ -23,9 +23,10 @@ void AppManager::Run(int width, int height)
 	int argc = 0;
 	char** argv = new char* (new char());
 	QApplication app(argc, argv);
-	window = new GUI(width, height);
 	dbManager = new DbManager();
+	window = new GUI(width, height);
 	ConnectCallBacks();
+	window->CompleteUsers();
 	app.exec();
 }
 

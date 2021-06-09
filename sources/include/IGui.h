@@ -14,7 +14,7 @@ class IGui {
         /*Interface signals*/
         boost::signal<std::vector<UserInfo>(const std::string&)> FindUsersSignal;
         boost::signal<User(const std::string&, const std::string&)> FindUserSignal;
-        boost::signal < std::vector<IntStringStruct>()> GetGroupsSignal;
+        boost::signal <std::vector<IntStringStruct>()> GetGroupsSignal;
         boost::signal<bool(const std::string&, const std::string&, const std::string &, int)>  AddUserSignal;
         boost::signal<std::vector<IntStringStruct>()> GetStatesSignal;
         boost::signal<std::vector<IntStringStruct>()> GetCitiesSignal;
@@ -34,6 +34,7 @@ class IGui {
         virtual void PrintUserInfo(const User& printedUser) = 0;
         virtual void PrintEvents(const std::vector<Event>& events) = 0;
         virtual void PrintCity(const City& _city) = 0;
+        virtual void CompleteUsers() = 0;
 
 
         //virtual UserInfo FindUsers(const std::string& searchInput) = 0;
