@@ -3,13 +3,34 @@
 #include <qlistwidget.h>
 #include <qlabel.h>
 #include <qtableview.h>
+#include <qpainter.h>
 #include <qstandarditemmodel.h>
+#include <qfontmetrics.h>
+
+THeaderView::THeaderView(Qt::Orientation orientation, QWidget* parent) :
+	QHeaderView(orientation, parent),
+	_font(QFont("helvetica", 15)),
+	_metrics(_font)
+{
+	this->_descent = this->_metrics.descent();
+	this->_margin = 10;
+}
+
+void THeaderView::paintSection(QPainter* painter, const QRect& rect, int logicalIndex) const
+{
+	auto data = this->model()->headerData(logicalIndex, this->orientation());
+	painter->rotate(90);
+	painter->setFont(this->font());
+	painter->drawText(-rect.height() + this->_margin,
+		rect.left() + (rect.width() + this->_descent) / 2, data.toString());
+}
 
 GUI::GUI(int width, int height) :
 	ui(new Ui::MainWindow())
 {
 	ui->setupUi(this);
 	connect(ui->searchStudentBtn, &QPushButton::clicked, this, &GUI::onSearchUserButtonClicked);
+	connect(ui->listSection, &QListWidget::itemClicked, this, &GUI::onSectionClicked);
 	this->setBaseSize(QSize(width, height));
 	this->show();
 }
@@ -59,14 +80,17 @@ void GUI::PrintUserInfo(const User& printedUser)
 	groupLabel->setVisible(true);
 
 	QTableView* view = new QTableView(this);
-	view->setEditTriggers(QAbstractItemView::EditTrigger::SelectedClicked);
+	THeaderView mHeader(Qt::Horizontal);
+	//view->setHorizontalHeader(&mHeader);
+	view->setEditTriggers(QAbstractItemView::EditTrigger::NoEditTriggers);
 	view->setVisible(true);
+	view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	QStandardItemModel* model = new QStandardItemModel(this);
 	int currentCol = 0;
 	model->insertRows(0, 1);
 	model->insertColumns(currentCol, 1);
 	view->setModel(model);
-	model->setHeaderData(currentCol++, Qt::Horizontal, QObject::tr("Object/Mark"));
+	model->setHeaderData(currentCol++, Qt::Horizontal, QObject::tr("Object/Mark"), Qt::DisplayRole);
 
 	if (!FindUserMarksSignal.empty() && !GetObjectsSignal.empty()) {
 		MarkList marks = FindUserMarksSignal(printedUser.GetUserId());
@@ -88,18 +112,23 @@ void GUI::PrintUserInfo(const User& printedUser)
 			// Из текущей оценки возьмем дату, попробуем найти существующую колонку
 			int neededIndex = -1;
 			for (int colIndex = 0; colIndex < model->columnCount(); colIndex++) {
-				if (model->headerData(colIndex, Qt::Horizontal, Qt::DisplayRole).toString() == boost::posix_time::to_simple_string(mark.second.second.first).c_str()) {
+				tm timeStamp = boost::posix_time::to_tm(mark.second.second.first);
+				std::string markDate = std::to_string(timeStamp.tm_mday) + "." + std::to_string(timeStamp.tm_mon + 1) + "." + std::to_string(timeStamp.tm_year + 1900);
+				if (model->headerData(colIndex, Qt::Horizontal, Qt::DisplayRole).toString() == markDate.c_str()) {
 					neededIndex = colIndex;
 					break;
 				}
 			}
 			if (neededIndex == -1) {
+				tm timeStamp = boost::posix_time::to_tm(mark.second.second.first);
+				std::string markDate = std::to_string(timeStamp.tm_mday) + "." + std::to_string(timeStamp.tm_mon + 1) + "." + std::to_string(timeStamp.tm_year + 1900);
 				model->insertColumns(currentCol, 1);
-				model->setHeaderData(currentCol, Qt::Horizontal, QObject::tr(boost::posix_time::to_simple_string(mark.second.second.first).c_str()));
+				model->setHeaderData(currentCol, Qt::Horizontal, QObject::tr(markDate.c_str()));
 				neededIndex = currentCol++;
 			}
 			QModelIndex addingMarkIndex = model->index(objectIndex.row(), neededIndex);
 			model->setData(addingMarkIndex, QString::number(mark.second.second.second));
+			model->setData(addingMarkIndex, Qt::AlignCenter, Qt::TextAlignmentRole);
 		}
 	}
 
@@ -120,6 +149,11 @@ void GUI::PrintEvents(const std::vector<Event>& events)
 
 void GUI::onSearchComboBoxTextChanged(const QString& text)
 {
+}
+
+void GUI::onSectionClicked(QListWidgetItem* item)
+{
+	ClearLayout(ui->dynamicContentLayout);
 }
 
 void GUI::onSearchUserButtonClicked()
