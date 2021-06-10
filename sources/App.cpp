@@ -27,6 +27,7 @@ void AppManager::Run(int width, int height)
 	window = new GUI(width, height);
 	ConnectCallBacks();
 	window->CompleteUsers();
+	//dlg->completeGroups();
 	app.exec();
 }
 

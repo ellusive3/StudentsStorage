@@ -32,6 +32,7 @@ GUI::GUI(int width, int height) :
 	connect(ui->searchStudentBtn, &QPushButton::clicked, this, &GUI::onSearchUserButtonClicked);
 	connect(ui->listSection, &QListWidget::itemClicked, this, &GUI::onSectionClicked);
 	//connect(ui->searchUserComboBox, &QComboBox::currentTextChanged, this, &GUI::onSearchComboBoxTextChanged);
+	connect(ui->openAddStudentForm, &QPushButton::clicked, this, &GUI::onOpenAddStudentForm);
 	this->setBaseSize(QSize(width, height));
 	this->show();
 }
@@ -185,4 +186,39 @@ void GUI::CompleteUsers()
 			ui->searchUserComboBox->addItem(tr(resultStr.c_str()));
 		}
 	}
+}
+
+//Klepko A.Y
+void GUI::CompleteGroups()
+{
+	if (!FindGroupsSignal.empty())
+	{
+		std::vector<IntStringStruct> groups = FindGroupsSignal("");
+
+		for (auto group : groups)
+		{
+			std::string resultStr = group.groupName;
+			dlg->studenGroupComboBox->addItem(tr(resultStr.c_str()));
+		}
+	}
+} 
+
+// Klepko A.Y.
+void GUI::onOpenAddStudentForm()
+{
+	QDialog* dlg = new QDialog;
+	Ui::Dialog dlg_ui;
+
+	dlg_ui.setupUi(dlg);
+	dlg->show();
+	if (!GetGroupsSignal.empty())
+	{
+		std::vector<IntStringStruct> groups = GetGroupsSignal();
+
+		for (auto group : groups)
+		{
+			std::string resultStr = group.groupName;
+			dlg_ui.studenGroupComboBox->addItem(tr(resultStr.c_str()));
+		}
+	}	
 }

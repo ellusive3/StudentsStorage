@@ -11,6 +11,9 @@ class AppManager {
         void Stop();
 	private:
 		IGui * window;
+        // Klepko A.Y
+        //Ui_Dialog dlg;
+        // End Klepko
         DbManager * dbManager;
         std::vector<UserInfo> FindUsers(const std::string& searchInput);
         User FindUser(const std::string& firstName, const std::string& lastName);
