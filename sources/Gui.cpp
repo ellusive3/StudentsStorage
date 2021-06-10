@@ -6,6 +6,7 @@
 #include <qpainter.h>
 #include <qstandarditemmodel.h>
 #include <qfontmetrics.h>
+#include <qmessagebox.h>
 
 THeaderView::THeaderView(Qt::Orientation orientation, QWidget* parent) :
 	QHeaderView(orientation, parent),
@@ -188,37 +189,34 @@ void GUI::CompleteUsers()
 	}
 }
 
-//Klepko A.Y
-void GUI::CompleteGroups()
-{
-	if (!FindGroupsSignal.empty())
-	{
-		std::vector<IntStringStruct> groups = FindGroupsSignal("");
-
-		for (auto group : groups)
-		{
-			std::string resultStr = group.groupName;
-			dlg->studenGroupComboBox->addItem(tr(resultStr.c_str()));
-		}
-	}
-} 
-
 // Klepko A.Y.
 void GUI::onOpenAddStudentForm()
 {
-	QDialog* dlg = new QDialog;
-	Ui::Dialog dlg_ui;
-
-	dlg_ui.setupUi(dlg);
-	dlg->show();
-	if (!GetGroupsSignal.empty())
+	if (!GetGroupsSignal.empty() && !AddUserSignal.empty())
 	{
 		std::vector<IntStringStruct> groups = GetGroupsSignal();
+		AddUserDialog* dlg = new AddUserDialog(groups);
 
-		for (auto group : groups)
-		{
-			std::string resultStr = group.groupName;
-			dlg_ui.studenGroupComboBox->addItem(tr(resultStr.c_str()));
+		int result = dlg->exec();
+		if (result == QDialog::Accepted) {
+			// Добавляем пользователя в БД
+			int addRes = AddUserSignal(dlg->GetFirstName(), dlg->GetLastName(), dlg->GetThirdName(), dlg->GetGroupId());
+			if (addRes == ERROR_USER_ALREADY_EXIST) {
+				QMessageBox errorMessage(QMessageBox::Icon::Warning,
+					QString::fromStdWString(L"Ошибка при добавлении нового пользователя"),
+					QString::fromStdWString(L"При добавлении пользователя возникла ошибка. Указанный пользователь уже существует!"),
+					QMessageBox::Ok,
+					this);
+				errorMessage.exec();
+			}
+			else if (addRes == ERROR_UNKNOWN_ERROR) {
+				QMessageBox errorMessage(QMessageBox::Icon::Warning,
+					QString::fromStdWString(L"Ошибка при добавлении нового пользователя"),
+					QString::fromStdWString(L"При добавлении пользователя возникла ошибка. Информация об ошибке недоступна"),
+					QMessageBox::Ok,
+					this);
+				errorMessage.exec();
+			}
 		}
-	}	
+	}
 }

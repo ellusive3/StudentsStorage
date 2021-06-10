@@ -95,9 +95,10 @@ MarkList AppManager::FindUserMarks(int userId)
 	return dbManager->FindUserMarks(userId);
 }
 
-bool AppManager::AddUser(const std::string& firstName, const std::string& lastName, const std::string& thirdName, int groupId)
+int AppManager::AddUser(const std::string& firstName, const std::string& lastName, const std::string& thirdName, int groupId)
 {
-	return true;
+	User addingUser(-1, firstName, lastName, thirdName, groupId, 0.0);
+	return dbManager->AddUser(addingUser);
 }
 
 std::vector<IntStringStruct> AppManager::GetStates()

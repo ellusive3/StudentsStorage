@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <qheaderview.h>
 #include <ui_studentsstorage.h>
-#include <ui_addstudent.h>
+#include <AddUserDialog.h>
 #include <User.h>
 
 class THeaderView : public QHeaderView {
@@ -28,12 +28,8 @@ class GUI : public IGui, public QMainWindow, public Ui::MainWindow {
 		virtual void PrintCity(const City& _city) override;
 		virtual void PrintEvents(const std::vector<Event>& events) override;
 		virtual void CompleteUsers() override;
-		virtual void CompleteGroups() override;
 	private:
 		Ui::MainWindow* ui;
-		//Klepko A.Y.
-		Ui::Dialog* dlg;
-		// End Klepko
 		void ClearLayout(QLayout* layout);
 	protected:
 		void onSearchComboBoxTextChanged(const QString& text);

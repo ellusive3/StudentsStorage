@@ -15,11 +15,12 @@ add_executable(${TARGET}
     ${CMAKE_CURRENT_SOURCE_DIR}/Row.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Gui.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DbManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AddUserDialog.cpp
 )
 
 MESSAGE("TOOLSET IS " ${MSVC_TOOLSET_VERSION})
 SET(CMAKE_AUTOMOC ON)
-set(CMAKE_PREFIX_PATH D:/IDE_and_Edtirors/Qt5/5.9.9/msvc2017_64/lib/cmake/Qt5)
+set(CMAKE_PREFIX_PATH C:/Qt/Qt5.9.9/5.9.9/msvc2017_64/lib/cmake/Qt5)
 
 
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)

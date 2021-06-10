@@ -18,7 +18,7 @@ class AppManager {
         std::vector<UserInfo> FindUsers(const std::string& searchInput);
         User FindUser(const std::string& firstName, const std::string& lastName);
         std::vector<IntStringStruct> GetGroups();
-        bool AddUser(const std::string& firstName, const std::string& lastName, const std::string& thirdName, int groupId);
+        int AddUser(const std::string& firstName, const std::string& lastName, const std::string& thirdName, int groupId);
         std::vector<IntStringStruct> GetStates();
         std::vector<IntStringStruct> GetCities();
         bool GetCity(int cityId);

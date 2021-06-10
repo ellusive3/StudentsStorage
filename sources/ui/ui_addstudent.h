@@ -163,7 +163,6 @@ public:
         studentGroupLabel->setText(QApplication::translate("Dialog", "\320\223\321\200\321\203\320\277\320\277\320\260", Q_NULLPTR));
         addNewStudentBtn->setText(QApplication::translate("Dialog", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214", Q_NULLPTR));
     } // retranslateUi
-        
 };
 
 namespace Ui {

@@ -18,7 +18,7 @@ class IGui {
         // end Klepko 
         boost::signal<User(const std::string&, const std::string&)> FindUserSignal;
         boost::signal <std::vector<IntStringStruct>()> GetGroupsSignal;
-        boost::signal<bool(const std::string&, const std::string&, const std::string &, int)>  AddUserSignal;
+        boost::signal<int(const std::string&, const std::string&, const std::string &, int)>  AddUserSignal;
         boost::signal<std::vector<IntStringStruct>()> GetStatesSignal;
         boost::signal<std::vector<IntStringStruct>()> GetCitiesSignal;
         boost::signal<bool(int)> GetCitySignal;

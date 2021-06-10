@@ -14,7 +14,7 @@ bool DbManager::ConnectToDb()
 	if (conn.isConnected())
 		return true;
 	try {
-		conn.Connect(_TSA("localhost@postgres"), _TSA("postgres"), _TSA("postgres"), SA_PostgreSQL_Client);
+		conn.Connect(_TSA("localhost@StudentsStorage"), _TSA("postgres"), _TSA("admin"), SA_PostgreSQL_Client);
 		printf("We are connected!\n");
 	}
 	catch (SAException& ex) {
@@ -178,6 +178,39 @@ std::vector<IntStringStruct> DbManager::GetAllObjects()
 	}
 	return results;
 }
+
+int DbManager::AddUser(User& _user)
+{
+	// Проверим, что такого пользователя еще нет в БД
+	std::vector<Row> rawResults = Select("SELECT * FROM \"user\" WHERE UPPER(%1) = UPPER(#1) AND UPPER(%2) = UPPER(#2) AND UPPER(%3) = UPPER(#3) AND %4 = #4",
+		4,
+		new Attribute("sfirstname", _user.GetFirstName()),
+		new Attribute("slastname", _user.GetLastName()),
+		new Attribute("sthirdname", _user.GetThirdName()),
+		new Attribute("idgroup", _user.GetGroupId()));
+
+	// Если такой пользователь есть, то вернем ошибку добавления
+	if (!rawResults.empty())
+		return ERROR_USER_ALREADY_EXIST;
+
+	// Иначе добавим пользователя и вернем успешный код
+	try {
+		int rowsAffected = Insert("INSERT INTO \"user\" (%1, %2, %3, %4, %5) VALUES (#1, #2, #3, #4, #5)",
+			5,
+			new Attribute("sfirstname", _user.GetFirstName()),
+			new Attribute("slastname", _user.GetLastName()),
+			new Attribute("sthirdname", _user.GetThirdName()),
+			new Attribute("dblaveragedisciplinescore", _user.GetAvgDisciplineScore()),
+			new Attribute("idgroup", _user.GetGroupId()));
+		if (rowsAffected > 0)
+			return USER_ADD_SUCCESS;
+	}
+	catch (...) {
+		return ERROR_UNKNOWN_ERROR;
+	}
+	return ERROR_UNKNOWN_ERROR;
+}
+
 
 std::vector<UserInfo> DbManager::FindUsers(const std::string& regQuery)
 {
