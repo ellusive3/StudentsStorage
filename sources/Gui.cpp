@@ -7,6 +7,7 @@
 #include <qstandarditemmodel.h>
 #include <qfontmetrics.h>
 #include <qmessagebox.h>
+#include <qpixmap.h>
 
 THeaderView::THeaderView(Qt::Orientation orientation, QWidget* parent) :
 	QHeaderView(orientation, parent),
@@ -36,6 +37,8 @@ GUI::GUI(int width, int height) :
 	connect(ui->openAddStudentForm, &QPushButton::clicked, this, &GUI::onOpenAddStudentForm);
 	this->setBaseSize(QSize(width, height));
 	this->show();
+	userId = -1;
+	objectId = -1;
 }
 
 GUI::~GUI()
@@ -54,12 +57,15 @@ void GUI::ClearLayout(QLayout * layout) {
 		}
 		delete item;
 	}
+	userId = -1;
+	objectId = -1;
 }
 
 
 void GUI::PrintUserInfo(const User& printedUser)
 {
 	this->ClearLayout(dynamic_cast<QLayout*>(ui->dynamicContentLayout));
+	userId = printedUser.GetUserId();
 	QLabel* userNameLabel = new QLabel(this);
 	std::string studentFullName = "Student: " + printedUser.GetLastName() + " " + printedUser.GetFirstName() + " " + printedUser.GetThirdName();
 	userNameLabel->setText(QString(studentFullName.c_str()));
@@ -93,6 +99,35 @@ void GUI::PrintUserInfo(const User& printedUser)
 	model->insertRows(0, 1);
 	model->insertColumns(currentCol, 1);
 	view->setModel(model);
+#pragma region  LambdaExpression
+	connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, [model, this, printedUser](const QItemSelection& selected, const QItemSelection& deselected) {
+		int rowsCount = model->rowCount();
+		int selectedRowsCount = 0;
+		std::vector<bool> alreadySelected = std::vector<bool>(rowsCount);
+		for (auto& index : selected.indexes()) {
+			if (!alreadySelected[index.row()]) {
+				alreadySelected[index.row()] = true;
+				selectedRowsCount++;
+			}
+		}
+		printf("Selected rows %d", selectedRowsCount);
+		if (selectedRowsCount == 1) {
+			int selectedRow = selected.indexes().begin()->row();
+			if (!FindUserMarksSignal.empty()) {
+				MarkList marks = FindUserMarksSignal(printedUser.GetUserId());
+				for (auto mark : marks) {
+					if (mark.second.first == model->data(model->index(selectedRow, 0), Qt::DisplayRole).toString().toStdString()) {
+						objectId = mark.first;
+						break;
+					}
+				}
+			}
+		}
+		else
+			objectId = -1;
+		});
+#pragma endregion
+
 	model->setHeaderData(currentCol++, Qt::Horizontal, QObject::tr("Object/Mark"), Qt::DisplayRole);
 
 	if (!FindUserMarksSignal.empty() && !GetObjectsSignal.empty()) {
@@ -135,9 +170,17 @@ void GUI::PrintUserInfo(const User& printedUser)
 		}
 	}
 
+	QPushButton* addMarkButton = new QPushButton(this);
+	std::string currentPath = boost::filesystem::current_path().generic_string() + "/plus_icon.ico";
+	QPixmap buttonPic(currentPath.c_str());
+	addMarkButton->setIcon(buttonPic);
+	addMarkButton->setFixedWidth(50);
+	connect(addMarkButton, &QPushButton::clicked, this, &GUI::onOpenAddMarkForm);
+
 	ui->dynamicContentLayout->addWidget(userNameLabel);
 	ui->dynamicContentLayout->addWidget(groupLabel);
 	ui->dynamicContentLayout->addWidget(avgDiscMark);
+	ui->dynamicContentLayout->addWidget(addMarkButton);
 	ui->dynamicContentLayout->addWidget(view);
 }
 
@@ -210,7 +253,7 @@ void GUI::onOpenAddStudentForm()
 				errorMessage.exec();
 			}
 			else if (addRes == ERROR_UNKNOWN_ERROR) {
-				QMessageBox errorMessage(QMessageBox::Icon::Warning,
+				QMessageBox errorMessage(QMessageBox::Icon::Critical,
 					QString::fromStdWString(L"Ошибка при добавлении нового пользователя"),
 					QString::fromStdWString(L"При добавлении пользователя возникла ошибка. Информация об ошибке недоступна"),
 					QMessageBox::Ok,
@@ -220,3 +263,30 @@ void GUI::onOpenAddStudentForm()
 		}
 	}
 }
+
+void GUI::onOpenAddMarkForm()
+{
+	if (userId > -1 && objectId > -1) {
+		AddMarkDialog* markForm = new AddMarkDialog();
+		int result = markForm->exec();
+		if (result == QDialog::Accepted) {
+			uint64_t markValue = markForm->GetMarkValue();
+			QDate markDate = markForm->GetMarkDate();
+			if (!AddMarkSignal.empty()) {
+				std::string qtDateStr = std::to_string(markDate.year()) + "-" + std::to_string(markDate.month()) + "-" + std::to_string(markDate.day());
+				boost::posix_time::ptime boostTime = boost::posix_time::time_from_string(qtDateStr + " 00:00:00");
+				AddMarkSignal(userId, objectId, Mark(boostTime, markValue));
+				ui->searchStudentBtn->click();
+			}
+		}
+	}
+	else {
+		QMessageBox errorMessage(QMessageBox::Icon::Critical,
+			QString::fromStdWString(L"Ошибка при добавлении оценки пользователю"),
+			QString::fromStdWString(L"Пожалуйста, выберите пользователя и выделите строку с предметом из таблицы оценок!"),
+			QMessageBox::Ok,
+			this);
+		errorMessage.exec();
+	}
+}
+

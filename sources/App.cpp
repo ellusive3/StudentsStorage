@@ -51,6 +51,7 @@ void AppManager::Stop()
 	window->GetEventsSignal.disconnect_all_slots();
 	window->AddEventSignal.disconnect_all_slots();
 	window->FindUserMarksSignal.disconnect_all_slots();
+	window->AddMarkSignal.disconnect_all_slots();
 }
 
 void AppManager::ConnectCallBacks()
@@ -73,6 +74,7 @@ void AppManager::ConnectCallBacks()
 	window->GetEventsSignal.connect(boost::bind(&AppManager::GetEvents, this, _1, _2, _3));
 	window->AddEventSignal.connect(boost::bind(&AppManager::AddEvent, this, _1, _2, _3));
 	window->FindUserMarksSignal.connect(boost::bind(&AppManager::FindUserMarks, this, _1));
+	window->AddMarkSignal.connect(boost::bind(&AppManager::AddMarkToUser, this, _1, _2, _3));
 }
 
 std::vector<UserInfo> AppManager::FindUsers(const std::string& searchInput)
@@ -93,6 +95,11 @@ std::vector<IntStringStruct> AppManager::GetGroups()
 MarkList AppManager::FindUserMarks(int userId)
 {
 	return dbManager->FindUserMarks(userId);
+}
+
+void AppManager::AddMarkToUser(int userId, int objectId, Mark mark)
+{
+	dbManager->AddMarkToUser(userId, objectId, mark);
 }
 
 int AppManager::AddUser(const std::string& firstName, const std::string& lastName, const std::string& thirdName, int groupId)

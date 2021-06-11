@@ -9,6 +9,7 @@
 #include <qregexp.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <map>
+#include <boost/filesystem.hpp>
 
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING

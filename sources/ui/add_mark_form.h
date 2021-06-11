@@ -24,7 +24,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_Dialog
+class Ui_MarkDialog
 {
 public:
     QGridLayout *gridLayout;
@@ -49,12 +49,16 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         markDateDateEdit = new QDateEdit(Dialog);
         markDateDateEdit->setObjectName(QStringLiteral("markDateDateEdit"));
+        QDate date;
+        date.setDate(2021, 01, 01);
+        markDateDateEdit->setMinimumDate(date);
 
         verticalLayout->addWidget(markDateDateEdit);
 
         markValueSpinBox = new QSpinBox(Dialog);
         markValueSpinBox->setObjectName(QStringLiteral("markValueSpinBox"));
         markValueSpinBox->setMaximum(5);
+        markValueSpinBox->setMinimum(1);
 
         verticalLayout->addWidget(markValueSpinBox);
 
@@ -95,7 +99,7 @@ public:
 };
 
 namespace Ui {
-    class Dialog: public Ui_Dialog {};
+    class MarkDialog: public Ui_MarkDialog {};
 } // namespace Ui
 
 QT_END_NAMESPACE

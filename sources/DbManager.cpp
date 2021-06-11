@@ -68,6 +68,13 @@ std::string DbManager::PrepareRequest(const std::string& fmtReq, int countOfAttr
 				// string
 				result.replace(found, searchPattern.size(), "'" + boost::get<std::string>(val) + "'");
 			}
+			else if (val.type() == typeid(boost::posix_time::ptime)) {
+				// Date
+				boost::posix_time::ptime date = boost::get<boost::posix_time::ptime>(val);
+				tm timeStamp = boost::posix_time::to_tm(date);
+				std::string dateStr = std::to_string(timeStamp.tm_mday) + "." + std::to_string(timeStamp.tm_mon + 1) + "." + std::to_string(timeStamp.tm_year + 1900);
+				result.replace(found, searchPattern.size(), "'" + dateStr + "'");
+			}
 		}
 		countOfAttrs--;
 		counter++;
@@ -209,6 +216,23 @@ int DbManager::AddUser(User& _user)
 		return ERROR_UNKNOWN_ERROR;
 	}
 	return ERROR_UNKNOWN_ERROR;
+}
+
+void DbManager::AddMarkToUser(int userId, int objectId, Mark mark)
+{
+	std::vector<Row> rawResults = Select("SELECT * FROM \"userobject\" WHERE %1 = #1 AND %2 = #2 AND %3 = #3",
+		3,
+		new Attribute("iduser", userId),
+		new Attribute("idobject", objectId),
+		new Attribute("dmarkdate", mark.first));
+	if (rawResults.empty()) {
+		int rowsAffected = Insert("INSERT INTO \"userobject\" (%1, %2, %3, %4) VALUES (#1, #2, #3, #4)",
+			4,
+			new Attribute("iduser", userId),
+			new Attribute("idobject", objectId),
+			new Attribute("dmarkdate", mark.first),
+			new Attribute("nmarkvalue", mark.second));
+	}
 }
 
 

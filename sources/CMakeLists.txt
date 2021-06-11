@@ -16,6 +16,7 @@ add_executable(${TARGET}
     ${CMAKE_CURRENT_SOURCE_DIR}/Gui.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DbManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AddUserDialog.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AddMarkDialog.cpp
 )
 
 MESSAGE("TOOLSET IS " ${MSVC_TOOLSET_VERSION})

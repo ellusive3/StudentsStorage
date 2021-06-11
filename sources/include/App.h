@@ -33,6 +33,7 @@ class AppManager {
         std::vector<Event> GetEvents(int cityId, int firstDate, int lastDate);
         bool AddEvent(int eventDate, int cityId, int eventTime);
         MarkList FindUserMarks(int userId);
+        void AddMarkToUser(int userId, int objectId, Mark mark);
 	protected:
         void ConnectCallBacks();
 };

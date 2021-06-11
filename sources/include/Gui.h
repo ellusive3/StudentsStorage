@@ -6,6 +6,7 @@
 #include <qheaderview.h>
 #include <ui_studentsstorage.h>
 #include <AddUserDialog.h>
+#include <AddMarkDialog.h>
 #include <User.h>
 
 class THeaderView : public QHeaderView {
@@ -31,9 +32,12 @@ class GUI : public IGui, public QMainWindow, public Ui::MainWindow {
 	private:
 		Ui::MainWindow* ui;
 		void ClearLayout(QLayout* layout);
+		int userId;
+		int objectId;
 	protected:
 		void onSearchComboBoxTextChanged(const QString& text);
 		void onSearchUserButtonClicked();
 		void onSectionClicked(QListWidgetItem* item);
 		void onOpenAddStudentForm();
+		void onOpenAddMarkForm();
 };

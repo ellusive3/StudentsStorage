@@ -33,29 +33,10 @@ class IGui {
         boost::signal<std::vector<Event>(int, int, int)> GetEventsSignal;
         boost::signal<bool(int, int, int)> AddEventSignal;
         boost::signal<MarkList(int)> FindUserMarksSignal;
+        boost::signal<void(int, int, Mark)> AddMarkSignal;
         /*Interface functions*/
         virtual void PrintUserInfo(const User& printedUser) = 0;
         virtual void PrintEvents(const std::vector<Event>& events) = 0;
         virtual void PrintCity(const City& _city) = 0;
         virtual void CompleteUsers() = 0;
-        //virtual void CompleteGroups() = 0;
-
-
-        //virtual UserInfo FindUsers(const std::string& searchInput) = 0;
-        //virtual bool FindUser(const std::string& firstName, const std::string& lastName) = 0;
-        //virtual const std::vector<IntStringStruct>& GetGroups() = 0;
-        //virtual bool AddUser(const std::string& firstName, const std::string& lastName, const std::string thirdName, int groupId) = 0;
-        //virtual const std::vector<IntStringStruct>& GetStates() = 0;
-        //virtual const std::vector<IntStringStruct>& GetCities(int stateId) = 0;
-        //virtual bool GetCity(int cityId) = 0;
-        //virtual void RateThisCity(int cityId, int userId, Rate score) = 0;
-        //virtual bool AddCity(int stateId, const std::string& cityName, double latitude = 0.0, double longtitude = 0.0) = 0;
-        //virtual const std::vector<IntStringStruct>& GetObjects() = 0;
-        //virtual const std::vector<IntStringStruct>& GetThemes(int objectId) = 0;
-        //virtual const std::vector<std::string>& GetLinks(int themeId) = 0;
-        //virtual bool AddObject(const std::string& objectName, const std::string& objectDescription) = 0;
-        //virtual bool AddTheme(int objectId, const std::string& themeName) = 0;
-        //virtual bool AddLink(int themeId, const std::string& link) = 0;
-        //virtual bool GetEvents(int cityId = -1, int firstDate = 0, int lastDate = 0) = 0;
-        //virtual bool AddEvent(int eventDate, int cityId, int eventTime) = 0;
 };
