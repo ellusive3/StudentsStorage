@@ -38,7 +38,7 @@ class IGui {
         virtual void PrintEvents(const std::vector<Event>& events) = 0;
         virtual void PrintCity(const City& _city) = 0;
         virtual void CompleteUsers() = 0;
-        virtual void CompleteGroups() = 0;
+        //virtual void CompleteGroups() = 0;
 
 
         //virtual UserInfo FindUsers(const std::string& searchInput) = 0;
